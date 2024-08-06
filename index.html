@@ -10,6 +10,21 @@
     <header>
         <h1>Open Time Travel Experiment</h1>
         <p>A Public Exploration into the Mysteries of Time Travel</p>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="description.html">Project Description</a></li>
+                <li><a href="forum.html">Forum</a></li>
+            </ul>
+            <div class="language-selector">
+                <img src="us_flag.png" alt="US Flag" id="language-menu">
+                <div id="language-options" class="hidden">
+                    <img src="us_flag.png" alt="US Flag" onclick="changeLanguage('en')">
+                    <img src="ru_flag.png" alt="Russian Flag" onclick="changeLanguage('ru')">
+                    <!-- Add more flags as needed -->
+                </div>
+            </div>
+        </nav>
     </header>
     <main>
         <section>
@@ -50,5 +65,15 @@
     <footer>
         <p>&copy; 2024 Open Time Travel Experiment. All rights reserved.</p>
     </footer>
+    <script>
+        document.getElementById('language-menu').addEventListener('click', function() {
+            document.getElementById('language-options').classList.toggle('hidden');
+        });
+
+        function changeLanguage(lang) {
+            alert('Language changed to: ' + lang);
+            // Implement language change logic here
+        }
+    </script>
 </body>
 </html>
