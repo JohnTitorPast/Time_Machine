@@ -29,7 +29,10 @@
         <section>
             <h2 data-en="Forum" data-ru="Форум">Forum</h2>
             <p data-en="Welcome to the open forum where users can discuss time travel theories and experiments. Please note that all posts are subject to CAPTCHA verification." data-ru="Добро пожаловать на открытый форум, где пользователи могут обсуждать теории и эксперименты по перемещению во времени. Обратите внимание, что все сообщения проходят проверку CAPTCHA.">Welcome to the open forum where users can discuss time travel theories and experiments. Please note that all posts are subject to CAPTCHA verification.</p>
-            <form id="forum-form" action="#" method="GET">
+            <section id="messages">
+                <!-- Messages will be loaded here -->
+            </section>
+            <form id="forum-form" action="#" method="POST">
                 <label for="username" data-en="Username:" data-ru="Имя пользователя:">Username:</label>
                 <input type="text" id="username" name="username" required>
                 
@@ -43,16 +46,13 @@
                 
                 <button type="submit" data-en="Submit" data-ru="Отправить">Submit</button>
             </form>
-            <section id="messages">
-                <!-- Messages will be loaded here -->
-            </section>
             <div class="pagination">
                 <!-- Pagination links will be added here -->
             </div>
         </section>
     </main>
     <footer>
-        <p data-en="&copy; 2024 Open Time Travel Experiment. All rights reserved." data-ru="&copy; 2024 Открытый Эксперимент по Перемещению во Времени. Все права защищены.">&copy; 2024 Open Time Travel Experiment. All rights reserved.</p>
+        <p id="user-count" data-en="&copy; 2024 Open Time Travel Experiment. All rights reserved. Users online: " data-ru="&copy; 2024 Открытый Эксперимент по Перемещению во Времени. Все права защищены. Пользователей онлайн: ">&copy; 2024 Open Time Travel Experiment. All rights reserved. Users online: 0</p>
     </footer>
     <script>
         // Function to set a cookie
@@ -96,45 +96,38 @@
         window.onload = function() {
             const lang = getCookie('language') || 'en';
             changeLanguage(lang);
+            displayMessages(currentPage);
+            updateOnlineUsers();
         }
 
         // Forum logic
-        const messages = [
-            { username: "User1", comment: "This is a test message 1." },
-            { username: "User2", comment: "This is a test message 2." },
-            { username: "User3", comment: "This is a test message 3." },
-            { username: "User4", comment: "This is a test message 4." },
-            { username: "User5", comment: "This is a test message 5." },
-            { username: "User6", comment: "This is a test message 6." },
-            { username: "User7", comment: "This is a test message 7." },
-            { username: "User8", comment: "This is a test message 8." },
-            { username: "User9", comment: "This is a test message 9." },
-            { username: "User10", comment: "This is a test message 10." },
-            { username: "User11", comment: "This is a test message 11." },
-            { username: "User12", comment: "This is a test message 12." }
-        ];
-
         const messagesPerPage = 10;
         let currentPage = 1;
 
         function displayMessages(page) {
-            const start = (page - 1) * messagesPerPage;
-            const end = start + messagesPerPage;
-            const pageMessages = messages.slice(start, end);
+            fetch('messages.txt')
+                .then(response => response.text())
+                .then(data => {
+                    const messages = data.trim().split('\n').map(line => JSON.parse(line));
+                    const start = (page - 1) * messagesPerPage;
+                    const end = start + messagesPerPage;
+                    const pageMessages = messages.slice(start, end);
 
-            const messagesContainer = document.getElementById('messages');
-            messagesContainer.innerHTML = "";
-            pageMessages.forEach(msg => {
-                const messageElement = document.createElement('div');
-                messageElement.innerHTML = `<strong>${msg.username}</strong>: ${msg.comment}`;
-                messagesContainer.appendChild(messageElement);
-            });
+                    const messagesContainer = document.getElementById('messages');
+                    messagesContainer.innerHTML = "";
+                    pageMessages.forEach(msg => {
+                        const messageElement = document.createElement('div');
+                        messageElement.classList.add('message-container');
+                        messageElement.innerHTML = `<strong>${msg.username}</strong><p>${msg.comment}</p>`;
+                        messagesContainer.appendChild(messageElement);
+                    });
 
-            updatePagination(page);
+                    updatePagination(page, messages.length);
+                });
         }
 
-        function updatePagination(page) {
-            const totalPages = Math.ceil(messages.length / messagesPerPage);
+        function updatePagination(page, totalMessages) {
+            const totalPages = Math.ceil(totalMessages / messagesPerPage);
             const paginationContainer = document.querySelector('.pagination');
             paginationContainer.innerHTML = "";
 
@@ -157,15 +150,31 @@
             e.preventDefault();
             const username = document.getElementById('username').value;
             const comment = document.getElementById('comment').value;
-            messages.push({ username, comment });
-            displayMessages(currentPage);
-            this.reset();
+
+            const message = {
+                username: username,
+                comment: comment
+            };
+
+            fetch('save_message.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(message)
+            }).then(() => {
+                displayMessages(currentPage);
+                this.reset();
+            });
         });
 
-        window.onload = function () {
-            const lang = getCookie('language') || 'en';
-            changeLanguage(lang);
-            displayMessages(currentPage);
+        function updateOnlineUsers() {
+            const userCountElement = document.getElementById('user-count');
+            fetch('online_users.txt')
+                .then(response => response.text())
+                .then(data => {
+                    userCountElement.innerHTML = `${userCountElement.getAttribute('data-en')} ${data.trim()}`;
+                });
         }
     </script>
 </body>
