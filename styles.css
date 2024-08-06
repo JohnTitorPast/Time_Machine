@@ -15,6 +15,61 @@ header {
     border-bottom: 2px solid #00ff00;
 }
 
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: #00ff00;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+nav ul li a:hover {
+    background-color: #333;
+    border-radius: 5px;
+}
+
+.language-selector {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.language-selector img {
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#language-options {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: #0e0e0e;
+    border: 1px solid #00ff00;
+    padding: 10px;
+}
+
+#language-options.hidden {
+    display: none;
+}
+
 main {
     padding: 20px;
     max-width: 800px;
@@ -41,14 +96,14 @@ footer {
     border-top: 2px solid #00ff00;
 }
 
-.contact-form {
+.contact-form, form {
     background-color: #333;
     padding: 20px;
     border-radius: 5px;
     margin-top: 20px;
 }
 
-.contact-form input, .contact-form textarea {
+.contact-form input, .contact-form textarea, form input, form textarea {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -56,7 +111,7 @@ footer {
     border-radius: 5px;
 }
 
-.contact-form button {
+.contact-form button, form button {
     background-color: #00ff00;
     color: #000;
     border: none;
@@ -66,6 +121,6 @@ footer {
     font-size: 16px;
 }
 
-.contact-form button:hover {
+.contact-form button:hover, form button:hover {
     background-color: #009900;
 }
