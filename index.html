@@ -3,48 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time Machine Experiment</title>
+    <title>Open Time Travel Experiment</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Courier New', Courier, monospace;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            background-color: #1b1b1b;
+            color: #ffffff;
         }
         header {
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
+            background-color: #0e0e0e;
+            color: #00ff00;
+            padding: 20px 0;
             text-align: center;
+            border-bottom: 2px solid #00ff00;
         }
         main {
             padding: 20px;
+            max-width: 800px;
+            margin: auto;
         }
         h1 {
-            color: #333;
+            color: #00ff00;
         }
-        section {
-            margin-bottom: 20px;
+        h2 {
+            color: #ff66cc;
+        }
+        p, li {
+            color: #cccccc;
         }
         footer {
-            background-color: #333;
-            color: white;
+            background-color: #0e0e0e;
+            color: #ffffff;
             text-align: center;
-            padding: 10px 0;
-            position: fixed;
+            padding: 20px 0;
+            border-top: 2px solid #00ff00;
+        }
+        .contact-form {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .contact-form input, .contact-form textarea {
             width: 100%;
-            bottom: 0;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        .contact-form button {
+            background-color: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .contact-form button:hover {
+            background-color: #009900;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Time Machine Experiment</h1>
+        <h1>Open Time Travel Experiment</h1>
+        <p>A Public Exploration into the Mysteries of Time Travel</p>
     </header>
     <main>
         <section>
             <h2>About the Experiment</h2>
-            <p>This experiment aims to prove or disprove the existence of a time machine. Scientists from around the world are collaborating on this groundbreaking research.</p>
+            <p>This experiment aims to prove or disprove the existence of a time machine. Inspired by the anime "Steins;Gate," we are delving into the possibilities of time travel with the help of scientists and enthusiasts worldwide.</p>
         </section>
         <section>
             <h2>Methodology</h2>
@@ -60,13 +91,25 @@
             <p>The results of our experiments will be published here. Stay tuned for updates as we continue our research.</p>
         </section>
         <section>
-            <h2>Contact</h2>
-            <p>If you have any questions or would like to contribute to our research, please contact us at <a href="mailto:timemachine.experiment@example.com">timemachine.experiment@example.com</a>.</p>
+            <h2>Contact Us</h2>
+            <div class="contact-form">
+                <form action="#" method="POST">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                    
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
         </section>
     </main>
     <footer>
-        <p>&copy; 2024 Time Machine Experiment. All rights reserved.</p>
+        <p>&copy; 2024 Open Time Travel Experiment. All rights reserved.</p>
     </footer>
 </body>
 </html>
-
