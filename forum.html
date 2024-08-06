@@ -29,7 +29,7 @@
         <section>
             <h2 data-en="Forum" data-ru="Форум">Forum</h2>
             <p data-en="Welcome to the open forum where users can discuss time travel theories and experiments. Please note that all posts are subject to CAPTCHA verification." data-ru="Добро пожаловать на открытый форум, где пользователи могут обсуждать теории и эксперименты по перемещению во времени. Обратите внимание, что все сообщения проходят проверку CAPTCHA.">Welcome to the open forum where users can discuss time travel theories and experiments. Please note that all posts are subject to CAPTCHA verification.</p>
-            <form action="#" method="GET">
+            <form id="forum-form" action="#" method="GET">
                 <label for="username" data-en="Username:" data-ru="Имя пользователя:">Username:</label>
                 <input type="text" id="username" name="username" required>
                 
@@ -43,6 +43,12 @@
                 
                 <button type="submit" data-en="Submit" data-ru="Отправить">Submit</button>
             </form>
+            <section id="messages">
+                <!-- Messages will be loaded here -->
+            </section>
+            <div class="pagination">
+                <!-- Pagination links will be added here -->
+            </div>
         </section>
     </main>
     <footer>
@@ -90,6 +96,76 @@
         window.onload = function() {
             const lang = getCookie('language') || 'en';
             changeLanguage(lang);
+        }
+
+        // Forum logic
+        const messages = [
+            { username: "User1", comment: "This is a test message 1." },
+            { username: "User2", comment: "This is a test message 2." },
+            { username: "User3", comment: "This is a test message 3." },
+            { username: "User4", comment: "This is a test message 4." },
+            { username: "User5", comment: "This is a test message 5." },
+            { username: "User6", comment: "This is a test message 6." },
+            { username: "User7", comment: "This is a test message 7." },
+            { username: "User8", comment: "This is a test message 8." },
+            { username: "User9", comment: "This is a test message 9." },
+            { username: "User10", comment: "This is a test message 10." },
+            { username: "User11", comment: "This is a test message 11." },
+            { username: "User12", comment: "This is a test message 12." }
+        ];
+
+        const messagesPerPage = 10;
+        let currentPage = 1;
+
+        function displayMessages(page) {
+            const start = (page - 1) * messagesPerPage;
+            const end = start + messagesPerPage;
+            const pageMessages = messages.slice(start, end);
+
+            const messagesContainer = document.getElementById('messages');
+            messagesContainer.innerHTML = "";
+            pageMessages.forEach(msg => {
+                const messageElement = document.createElement('div');
+                messageElement.innerHTML = `<strong>${msg.username}</strong>: ${msg.comment}`;
+                messagesContainer.appendChild(messageElement);
+            });
+
+            updatePagination(page);
+        }
+
+        function updatePagination(page) {
+            const totalPages = Math.ceil(messages.length / messagesPerPage);
+            const paginationContainer = document.querySelector('.pagination');
+            paginationContainer.innerHTML = "";
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageLink = document.createElement('a');
+                pageLink.href = "#";
+                pageLink.textContent = i;
+                if (i === page) {
+                    pageLink.classList.add('active');
+                }
+                pageLink.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    displayMessages(i);
+                });
+                paginationContainer.appendChild(pageLink);
+            }
+        }
+
+        document.getElementById('forum-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const comment = document.getElementById('comment').value;
+            messages.push({ username, comment });
+            displayMessages(currentPage);
+            this.reset();
+        });
+
+        window.onload = function () {
+            const lang = getCookie('language') || 'en';
+            changeLanguage(lang);
+            displayMessages(currentPage);
         }
     </script>
 </body>
