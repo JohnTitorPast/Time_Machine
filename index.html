@@ -65,6 +65,31 @@
         <p data-en="&copy; 2024 Open Time Travel Experiment. All rights reserved." data-ru="&copy; 2024 Открытый Эксперимент по Перемещению во Времени. Все права защищены.">&copy; 2024 Open Time Travel Experiment. All rights reserved.</p>
     </footer>
     <script>
+        // Function to set a cookie
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        // Function to get a cookie
+        function getCookie(name) {
+            const cname = name + "=";
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(cname) == 0) {
+                    return c.substring(cname.length, c.length);
+                }
+            }
+            return "";
+        }
+
         document.getElementById('language-menu').addEventListener('click', function() {
             document.getElementById('language-options').classList.toggle('hidden');
         });
@@ -73,6 +98,14 @@
             document.querySelectorAll('[data-en]').forEach(el => {
                 el.textContent = el.getAttribute(`data-${lang}`);
             });
+            document.getElementById('language-options').classList.add('hidden');
+            setCookie('language', lang, 7); // Save language preference for 7 days
+        }
+
+        // Load the preferred language on page load
+        window.onload = function() {
+            const lang = getCookie('language') || 'en';
+            changeLanguage(lang);
         }
     </script>
 </body>
