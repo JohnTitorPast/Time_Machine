@@ -24,6 +24,7 @@
                 </div>
             </div>
         </nav>
+        <div id="user-count" data-en="Users online: 0" data-ru="Пользователей онлайн: 0" style="font-size: 1.5em; text-align: center; margin-top: 10px;">Users online: 0</div>
     </header>
     <main>
         <section>
@@ -52,7 +53,7 @@
         </section>
     </main>
     <footer>
-        <p id="user-count" data-en="&copy; 2024 Open Time Travel Experiment. All rights reserved. Users online: " data-ru="&copy; 2024 Открытый Эксперимент по Перемещению во Времени. Все права защищены. Пользователей онлайн: ">&copy; 2024 Open Time Travel Experiment. All rights reserved. Users online: 0</p>
+        <p data-en="&copy; 2024 Open Time Travel Experiment. All rights reserved." data-ru="&copy; 2024 Открытый Эксперимент по Перемещению во Времени. Все права защищены.">&copy; 2024 Open Time Travel Experiment. All rights reserved.</p>
     </footer>
     <script>
         // Function to set a cookie
@@ -97,7 +98,6 @@
             const lang = getCookie('language') || 'en';
             changeLanguage(lang);
             displayMessages(currentPage);
-            updateOnlineUsers();
         }
 
         // Forum logic
@@ -167,15 +167,6 @@
                 this.reset();
             });
         });
-
-        function updateOnlineUsers() {
-            const userCountElement = document.getElementById('user-count');
-            fetch('online_users.txt')
-                .then(response => response.text())
-                .then(data => {
-                    userCountElement.innerHTML = `${userCountElement.getAttribute('data-en')} ${data.trim()}`;
-                });
-        }
     </script>
 </body>
 </html>
